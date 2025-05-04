@@ -1,0 +1,112 @@
+<div style="padding: 20px; max-width: 800px; margin: auto;">
+  <a href="/admin/products" style="font-size: 20px;text-decoration: none">Back</a>
+  <h2 style="margin-bottom: 20px;">Add new product</h2>
+
+  <form action="/admin/products/store" method="POST" enctype="multipart/form-data">
+    <div style="margin-bottom: 15px;">
+      <label>Name</label><br />
+      <input
+        type="text"
+        name="name"
+        required
+        style="width: 100%; padding: 8px;"
+      />
+    </div>
+
+    <div style="margin-bottom: 15px;">
+      <label>Description</label><br />
+      <textarea
+        name="description"
+        style="width: 100%; padding: 8px;"
+      ></textarea>
+    </div>
+
+    <div style="margin-bottom: 15px;">
+      <label>Price</label><br />
+      <input
+        type="number"
+        name="price"
+        required
+        style="width: 100%; padding: 8px;"
+      />
+    </div>
+
+     <div style="margin-bottom: 15px;">
+      <label>Brand</label><br />
+      <input
+        type="text"
+        name="brand"
+        required
+        style="width: 100%; padding: 8px;"
+      />
+    </div>
+
+    <div style="margin-bottom: 15px;">
+      <label>Category</label><br />
+      <input
+        type="text"
+        name="category"
+        required
+        style="width: 100%; padding: 8px;"
+      />
+    </div>
+
+    <h4>Variations:</h4>
+    <div id="variations-container"></div>
+
+    <button type="button" onclick="addVariation()" style="margin: 10px 0;">+ Add
+      variations</button>
+
+    <br />
+    <button type="submit" class="btn btn-primary" style="padding: 10px 20px;">Add product</button>
+  </form>
+</div>
+
+<script type="text/javascript">
+  let variationIndex = 0;
+
+      function addVariation() {
+      const container = document.getElementById('variations-container');
+      const variationId = `variation-${variationIndex}`;
+      const variationHTML = `
+        <div class="variation" id="${variationId}" style="border: 1px solid #ccc; padding: 15px; margin-bottom: 15px; position: relative;">
+          <button type="button" onclick="removeElement('${variationId}')" style="position: absolute; top: 5px; right: 5px; background: transparent; color: black; border: none; border-radius: 50%; width: 25px; height: 25px;">×</button>
+          <label>Color:</label>
+          <input type="text" name="variations[${variationIndex}][color]" required style="margin-bottom: 10px;" />
+          <br />
+          <label>Image:</label>
+          <input type="file" name="variationImages[${variationIndex}]" accept="image/" required style="width: 60%; margin-bottom: 10px;" />
+          <h5>Sizes:</h5>
+          <div class="sizes-container" id="sizes-${variationIndex}"></div>
+          <button type="button" onclick="addSize(${variationIndex})">+ Add more size</button>
+        </div>
+      `;
+      container.insertAdjacentHTML('beforeend', variationHTML);
+      variationIndex++;
+    }
+
+
+    function addSize(variationIdx) {
+      const sizesContainer = document.getElementById(`sizes-${variationIdx}`);
+      const sizeIndex = sizesContainer.children.length;
+      const sizeId = `size-${variationIdx}-${sizeIndex}`;
+      const sizeHTML = `
+        <div id="${sizeId}" style="margin-bottom: 8px; position: relative;">
+          <input type="text" name="variations[${variationIdx}][sizes][${sizeIndex}][size]" placeholder="Size" required />
+          <input type="number" name="variations[${variationIdx}][sizes][${sizeIndex}][quantity]" placeholder="Quantity" required />
+          <button type="button" onclick="removeElement('${sizeId}')" style="margin-left: 8px; background: transparent; color: black; border: none; border-radius: 4px;">×</button>
+        </div>
+      `;
+      sizesContainer.insertAdjacentHTML('beforeend', sizeHTML);
+    }
+
+    function removeElement(id) {
+      const el = document.getElementById(id);
+      if (el) el.remove();
+    }
+
+  window.onload = () => {
+    addVariation();
+    addSize(0);
+  };
+</script>

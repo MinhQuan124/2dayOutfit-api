@@ -1,0 +1,120 @@
+<div style="margin:2rem 0">
+  <a href="/admin/products" style="font-size: 25px; text-decoration: none">Back to product list</a>
+  <div style="display: flex; justify-content: space-between">
+    <div>
+      <h1>Deleted products</h1>
+    </div>
+
+  </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Price</th>
+        <th scope="col">Brand</th>
+        <th scope="col">Category</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each deletedProducts}}
+        <tr>
+          <th scope="row">{{@index}}</th>
+          <td>{{this.name}}</td>
+          <td>{{this.price}}$</td>
+          <td>{{this.brand}}</td>
+          <td>{{this.category}}</td>
+          <td>
+            <a
+              href="#"
+              class="btn-restore btn btn-primary"
+              data-id={{this._id}}
+            >Restore</a>
+            <a
+              href="#"
+              class="btn btn-danger"
+              data-bs-toggle="modal"
+              data-id={{this._id}}
+              data-bs-target="#delete-product-modal"
+            >Destroy</a>
+          </td>
+        </tr>
+
+      {{else}}
+      <tr>
+        <td colspan="6" class="text-center">
+          You dont have any product.
+        </td>
+      </tr>
+
+      {{/each}}
+    </tbody>
+  </table>
+</div>
+
+{{! Confirm deletion }}
+<div id="delete-product-modal" class="modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirm deletion</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure to permanently delete this product?</p>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+        >Cancel</button>
+        <button type="button" id="btn-delete-product" class="btn btn-danger">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{!-- Hidden deletion form --}}
+<form name="delete-product-form" method="POST"></form>
+{{!-- Hidden restoration form --}}
+<form name="restore-product-form" method="POST"></form>
+
+<script>
+   document.addEventListener('DOMContentLoaded', function () {
+  var productId;
+  var deleteProductForm = document.forms['delete-product-form'];
+  var restoreProductForm = document.forms['restore-product-form'];
+  var btnDeleteProduct = document.getElementById('btn-delete-product');
+
+  var btnRestores = document.querySelectorAll('.btn-restore');
+
+  var deleteProductModal = document.getElementById('delete-product-modal')
+  deleteProductModal.addEventListener('show.bs.modal', function (event) {
+  var button = event.relatedTarget;
+  productId = button.getAttribute('data-id');
+})
+
+  btnDeleteProduct.onclick = function() {
+    deleteProductForm.action = '/admin/products/' + productId + '/destroy?_method=DELETE';
+    deleteProductForm.submit();
+  }
+
+  //Restore btn click
+  btnRestores.forEach(btnRestore => {
+    btnRestore.addEventListener('click', e => {
+      e.preventDefault();
+
+      var productId = btnRestore.getAttribute('data-id');
+      restoreProductForm.action = '/admin/products/' + productId + '/restore?_method=PATCH';
+      restoreProductForm.submit();
+    })
+  })
+   })
+</script>

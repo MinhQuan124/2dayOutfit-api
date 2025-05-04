@@ -1,0 +1,114 @@
+<div style="padding: 20px; max-width: 800px; margin: auto;">
+  <a
+    href="/admin/products"
+    style="font-size: 20px;text-decoration: none"
+  >Back</a>
+  <form
+    action="/admin/products/{{product._id}}?_method=PUT"
+    method="POST"
+    enctype="multipart/form-data"
+  >
+
+    <h2 style="margin-bottom: 20px;">Edit product</h2>
+
+    <label style="display: block; margin-top: 16px;">Name</label>
+    <input
+      type="text"
+      name="name"
+      value="{{product.name}}"
+      required
+      style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc;"
+    />
+
+    <label style="display: block; margin-top: 16px;">Description</label>
+    <textarea
+      name="description"
+      rows="4"
+      style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc;"
+    >{{product.description}}</textarea>
+
+    <label style="display: block; margin-top: 16px;">Price</label>
+    <input
+      type="number"
+      name="price"
+      value="{{product.price}}"
+      required
+      style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc;"
+    />
+
+    <!-- Brand -->
+    <label style="display: block; margin-top: 16px;">Brand</label>
+    <input
+      type="text"
+      name="brand"
+      value="{{product.brand}}"
+      required
+      style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc;"
+    />
+
+    <!-- Category -->
+    <label style="display: block; margin-top: 16px;">Category</label>
+    <input
+      type="text"
+      name="category"
+      value="{{product.category}}"
+      required
+      style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc;"
+    />
+
+    <!-- Variations -->
+  <h3 style="text-align: center; font-weight: bold; margin: 15px 0;">Variations</h3>
+
+  {{#each product.variations}}
+    <div style="border: 1px solid #ccc; padding: 16px; margin-bottom: 20px; border-radius: 8px; background-color: #fafafa;">
+      <h4 style="font-weight: bold;">Product {{@index}}</h4>
+
+      <label>Color</label>
+      <input type="text" name="variations[{{@index}}][color]" value="{{this.color}}" style="width: 100%; padding: 8px; margin-bottom: 10px; border-radius: 6px; border: 1px solid #ccc;" />
+
+      <!-- Current image-->
+      <label>Current image</label><br />
+      <img src="{{this.image}}" alt="Current image" style="width: 120px; height: auto; border-radius: 6px; margin: 6px 0;" />
+      <br />
+      <label><input type="checkbox" name="removeImages" class="removed-image-checkbox" value="{{this.image}}" /> Delete this image</label>
+
+      <!-- New image -->
+      <label style="display: block; margin-top: 10px;">New image (option)</label>
+      <input type="file" name="variationImages[{{@index}}]" class="image-upload" disabled style="width: 100%; padding: 8px; border-radius: 6px; border: 1px solid #ccc;" />
+
+      <!-- Sizes -->
+      <div style="margin-top: 12px;">
+        <label style="font-weight: bold;">Size and quantity</label>
+
+        {{#each this.sizes}}
+          <div style="display: flex; gap: 12px; margin-bottom: 8px;">
+            <input type="text" name="variations[{{@../index}}][sizes][{{@index}}][size]" value="{{this.size}}" placeholder="Size"
+              style="flex: 1; padding: 8px; border-radius: 6px; border: 1px solid #ccc;" />
+            <input type="number" name="variations[{{@../index}}][sizes][{{@index}}][quantity]" value="{{this.quantity}}" placeholder="Số lượng"
+              style="flex: 1; padding: 8px; border-radius: 6px; border: 1px solid #ccc;" />
+          </div>
+        {{/each}}
+      </div>
+    </div>
+  {{/each}}
+
+    <!-- Submit -->
+    <button
+      type="submit"
+      style="margin-top: 24px; width: 100%; padding: 12px; background-color: #2e86de; color: white; border: none; border-radius: 8px; cursor: pointer; transition: background-color 0.2s;"
+    >
+      Update product
+    </button>
+  </form>
+</div>
+
+<script type="text/javascript">
+  document.querySelectorAll(".removed-image-checkbox").forEach((checkbox, index) => {
+    checkbox.addEventListener("change", function () {
+      const fileInputs = document.querySelectorAll(".image-upload");
+      if (fileInputs[index]) {
+        fileInputs[index].disabled = !this.checked;
+      }
+    });
+  });
+</script>

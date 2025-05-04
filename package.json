@@ -1,0 +1,30 @@
+{
+  "name": "2dayoutfit-api",
+  "version": "1.0.0",
+  "description": "minhquan1243 2dayoutfit",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "nodemon --inspect src/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "minhquan1243",
+  "license": "ISC",
+  "dependencies": {
+    "cloudinary": "^1.41.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^5.1.0",
+    "express-handlebars": "^8.0.1",
+    "method-override": "^3.0.0",
+    "mongoose": "^8.13.2",
+    "mongoose-delete": "^1.0.2",
+    "mongoose-slug-updater": "^3.3.0",
+    "multer": "^1.4.5-lts.2",
+    "multer-storage-cloudinary": "^4.0.0",
+    "qs": "^6.14.0",
+    "streamifier": "^0.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
