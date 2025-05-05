@@ -65,7 +65,7 @@ const productController = {
         description,
         price,
         brand,
-        category,
+        category: category.toLowerCase(),
         variations: finalVariations,
       });
 

@@ -2,6 +2,10 @@ const Product = require("../models/Product.model");
 const productRoutes = require("./product.route");
 const productAPIRoutes = require("./product.api.route");
 
+const authMiddleware = require("../middlewares/auth.middleware");
+
+const authRoutes = require("./auth.route");
+
 function route(app) {
   //Home
   app.get("/", (req, res, next) => {
@@ -34,7 +38,10 @@ function route(app) {
   app.use("/api/v1/products", productAPIRoutes);
 
   //Product Admin
-  app.use("/admin/products", productRoutes);
+  app.use("/admin/products", authMiddleware, productRoutes);
+
+  //Auth admin
+  app.use("/admin/auth", authRoutes);
 }
 
 module.exports = route;
