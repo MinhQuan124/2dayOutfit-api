@@ -1,0 +1,46 @@
+<div style="padding: 20px; max-width: 800px; margin: auto;">
+  <a href="/admin/users" style="font-size: 20px;text-decoration: none">Back</a>
+  <h2 style="margin-bottom: 20px;">Add new admin</h2>
+
+  {{#if error}}
+    <p style="color: red;">{{error}}</p>
+  {{/if}}
+
+  <form action="/admin/users/store" method="POST">
+    <div style="margin-bottom: 15px;">
+      <label>Fullname</label><br />
+      <input
+        type="text"
+        name="name"
+        required
+        style="width: 100%; padding: 8px;"
+      />
+    </div>
+
+    <div style="margin-bottom: 15px;">
+      <label>Email</label><br />
+      <input
+        type="email"
+        name="email"
+        required
+        style="width: 100%; padding: 8px;"
+      />
+    </div>
+
+    <div style="margin-bottom: 15px;">
+      <label>Password</label><br />
+      <input
+        type="password"
+        name="password"
+        required
+        style="width: 100%; padding: 8px;"
+      />
+    </div>
+
+    <button
+      type="submit"
+      class="btn btn-primary"
+      style="padding: 10px 20px;"
+    >Create Admin Account</button>
+  </form>
+</div>

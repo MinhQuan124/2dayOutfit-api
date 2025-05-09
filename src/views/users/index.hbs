@@ -1,0 +1,109 @@
+<div style="margin:2rem 0">
+  <a href="/" style="font-size: 25px; text-decoration: none">Home</a>
+  <div
+    style="display: flex; flex-direction: column;justify-content: space-between"
+  >
+    <div>
+      <h1>User list</h1>
+      <a
+        href="/admin/users/create-admin"
+        class="btn btn-success"
+        style="width: fit-content ;font-size: 15px;padding: 5px; height: 50px  ;display: flex; align-items: center"
+      >Add new admin</a>
+    </div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Role</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each users}}
+          <tr>
+            <th scope="row">{{@index}}</th>
+            <td>{{this.name}}</td>
+            <td>{{this.email}}</td>
+            <td>{{this.role}}</td>
+            <td>
+              <a
+                href="/admin/users/{{this._id}}/edit"
+                class="btn btn-primary"
+              >Edit</a>
+              <a
+                href="#"
+                class="btn btn-danger"
+                data-bs-toggle="modal"
+                data-id={{this._id}}
+                data-bs-target="#delete-user-modal"
+              >Delete</a>
+            </td>
+          </tr>
+
+        {{else}}
+          <tr>
+            <td colspan="6" class="text-center">
+              No users.
+            </td>
+          </tr>
+
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{{! Confirm deletion }}
+<div id="delete-user-modal" class="modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirm deletion</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure to delete this user?</p>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+        >Cancel</button>
+        <button
+          type="button"
+          id="btn-delete-user"
+          class="btn btn-danger"
+        >Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{!-- Hidden deletion form --}}
+<form name="delete-user-form" method="POST"></form>
+
+<script>
+  var userId;
+  var deleteUserForm = document.forms['delete-user-form'];
+  var btnDeleteUser = document.getElementById('btn-delete-user');
+
+  var deleteUserModal = document.getElementById('delete-user-modal')
+  deleteUserModal.addEventListener('show.bs.modal', function (event) {
+  var button = event.relatedTarget;
+  userId = button.getAttribute('data-id');
+})
+
+  btnDeleteUser.onclick = function() {
+    deleteUserForm.action = '/admin/users/' + userId + '?_method=DELETE';
+    deleteUserForm.submit();
+  }
+</script>

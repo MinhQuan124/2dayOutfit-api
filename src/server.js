@@ -13,7 +13,12 @@ const db = require("./config/db");
 
 const app = express();
 
-app.use(cors()); // cho phép frontend gọi API
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL,
+    credentials: true,
+  })
+); // cho phép frontend gọi API
 app.use(express.json()); // parse JSON
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));

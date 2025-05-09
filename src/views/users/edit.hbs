@@ -1,0 +1,48 @@
+<div style="padding: 20px; max-width: 800px; margin: auto;">
+  <a href="/admin/users" style="font-size: 20px;text-decoration: none">Back</a>
+  <h2 style="margin-bottom: 20px;">Edit User</h2>
+
+  {{#if error}}
+    <p style="color: red;">{{error}}</p>
+  {{/if}}
+
+  <form action="/admin/users/{{user._id}}?_method=PUT" method="POST">
+    <div style="margin-bottom: 15px;">
+      <label>Fullname</label><br />
+      <input
+        type="text"
+        name="name"
+        value="{{user.name}}"
+        required
+        style="width: 100%; padding: 8px;"
+      />
+    </div>
+
+    <div style="margin-bottom: 15px;">
+      <label>Email</label><br />
+      <input
+        type="email"
+        name="email"
+        value="{{user.email}}"
+        required
+        style="width: 100%; padding: 8px;"
+      />
+    </div>
+
+    <div style="margin-bottom: 15px;">
+      <label>Password</label><br />
+      <input
+        type="password"
+        name="password"
+        placeholder="Enter new password"
+        style="width: 100%; padding: 8px;"
+      />
+    </div>
+
+    <button
+      type="submit"
+      class="btn btn-primary"
+      style="padding: 10px 20px;"
+    >Update Admin Account</button>
+  </form>
+</div>

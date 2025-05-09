@@ -2,11 +2,14 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User.model");
 
 const authMiddleware = async (req, res, next) => {
-  const token = req.cookies.token;
+  const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
+
+  if (req.originalUrl.startsWith("/api/")) {
+    return next();
+  }
 
   // Check if token existed
   if (!token) {
-    // Cho phép truy cập các route auth mà không cần token
     if (req.originalUrl.startsWith("/admin/auth")) {
       return next();
     }

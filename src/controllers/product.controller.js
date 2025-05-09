@@ -136,7 +136,7 @@ const productController = {
         });
       });
 
-      // Cập nhật
+      // Update
       product.name = name;
       product.description = description;
       product.price = price;

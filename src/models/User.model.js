@@ -14,6 +14,7 @@ const userSchema = new Schema(
     },
     password: { type: String, required: true },
     role: { type: String, enum: ["user", "admin"], default: "user" },
+    isVerified: { type: Boolean, default: false },
   },
   { timestamps: true } //add createdAt, updatedAt
 );

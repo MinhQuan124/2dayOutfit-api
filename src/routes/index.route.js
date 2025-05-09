@@ -1,12 +1,31 @@
 const Product = require("../models/Product.model");
 const productRoutes = require("./product.route");
-const productAPIRoutes = require("./product.api.route");
+const authAdminRoutes = require("./authAdmin.route");
+const userRoutes = require("./user.route");
 
 const authMiddleware = require("../middlewares/auth.middleware");
 
-const authRoutes = require("./auth.route");
+const productAPIRoutes = require("./product.api.route");
+const authAPIRoutes = require("./auth.api.route");
+const cartAPIRoutes = require("./cart.api.route");
 
 function route(app) {
+  //Product API
+  app.use("/api/v1/products", productAPIRoutes);
+  //Auth api
+  app.use("/api/v1/auth", authAPIRoutes);
+  //Cart api
+  app.use("/api/v1/cart", cartAPIRoutes);
+
+  //Product Admin
+  app.use("/admin/products", authMiddleware, productRoutes);
+
+  //Auth admin
+  app.use("/admin/auth", authAdminRoutes);
+
+  //User admin
+  app.use("/admin/users", authMiddleware, userRoutes);
+
   //Home
   app.get("/", (req, res, next) => {
     Product.find({})
@@ -33,15 +52,6 @@ function route(app) {
       })
       .catch(next);
   });
-
-  //Product API
-  app.use("/api/v1/products", productAPIRoutes);
-
-  //Product Admin
-  app.use("/admin/products", authMiddleware, productRoutes);
-
-  //Auth admin
-  app.use("/admin/auth", authRoutes);
 }
 
 module.exports = route;

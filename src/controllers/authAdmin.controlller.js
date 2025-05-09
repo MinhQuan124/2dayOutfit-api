@@ -1,7 +1,7 @@
 const User = require("../models/User.model");
 const jwt = require("jsonwebtoken");
 
-const authController = {
+const authAdminController = {
   //[GET] /admin/auth
   getAuthForm: (req, res) => {
     res.render("auth/login", { layout: "auth" });
@@ -16,7 +16,7 @@ const authController = {
       if (!user || user.role !== "admin") {
         return res.render("auth/login", {
           layout: "auth",
-          error: "Admin not found",
+          error: "Admin access only",
         });
       }
 
@@ -24,7 +24,7 @@ const authController = {
       if (!isPassMatch) {
         return res.render("auth/login", {
           layout: "auth",
-          error: "Wrong password",
+          error: "Wrong password or email",
         });
       }
 
@@ -61,4 +61,4 @@ const authController = {
   },
 };
 
-module.exports = authController;
+module.exports = authAdminController;
