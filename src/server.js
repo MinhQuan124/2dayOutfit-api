@@ -26,8 +26,6 @@ app.use(methodOverride("_method"));
 app.use(cookieParser()); //parse cookie string to js object
 app.use(authMiddleware);
 
-const port = 8000;
-
 // config template engine
 app.engine(".hbs", engine({ extname: ".hbs" }));
 
@@ -56,6 +54,6 @@ route(app);
 //Connect to db
 db.connect();
 
-app.listen(port, () => {
-  console.log(`Server listening at http://localhost:${port}`);
+app.listen(process.env.PORT, () => {
+  console.log(`Server listening at http://localhost:${process.env.PORT}`);
 });
