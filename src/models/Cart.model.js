@@ -24,6 +24,7 @@ const cartSchema = new mongoose.Schema({
         default: 1,
         min: 1,
       },
+      ordered: { type: Boolean, default: false },
     },
   ],
 

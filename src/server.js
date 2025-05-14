@@ -1,6 +1,7 @@
 const express = require("express");
 const { engine } = require("express-handlebars");
 const cors = require("cors");
+const handlebars = require("express-handlebars");
 const cookieParser = require("cookie-parser");
 const path = require("path");
 const methodOverride = require("method-override");
@@ -29,6 +30,24 @@ const port = 8000;
 
 // config template engine
 app.engine(".hbs", engine({ extname: ".hbs" }));
+
+app.engine(
+  "hbs",
+  handlebars.engine({
+    extname: ".hbs",
+    helpers: {
+      eq: function (v1, v2) {
+        return v1 === v2;
+      },
+      formatDate: function (date) {
+        return new Date(date).toLocaleDateString();
+      },
+      isEqual: function (v1, v2, options) {
+        return v1 === v2 ? options.fn(this) : options.inverse(this);
+      },
+    },
+  })
+);
 app.set("view engine", ".hbs");
 app.set("views", path.join(__dirname, "views"));
 

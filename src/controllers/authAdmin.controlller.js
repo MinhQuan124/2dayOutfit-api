@@ -32,7 +32,7 @@ const authAdminController = {
       const token = jwt.sign(
         { userId: user._id, name: user.name, role: user.role },
         process.env.JWT_SECRET,
-        { expiresIn: "1d" }
+        { expiresIn: "7d" }
       );
 
       //send cookie
@@ -40,7 +40,7 @@ const authAdminController = {
         httpOnly: true, //only apply server read cookie (prevent from xss)
         secure: process.env.NODE_ENV === "production", //send cookie through https (production env only)
         sameSite: "strict",
-        maxAge: 24 * 60 * 60 * 1000, // 1 day
+        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
       });
 
       res.redirect("/");

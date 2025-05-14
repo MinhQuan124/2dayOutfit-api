@@ -30,6 +30,14 @@
     </div>
 
     <div style="margin-bottom: 15px;">
+      <label>Role</label><br />
+      <select name="role" style="width: 100%; padding: 8px;">
+        <option value="user" {{#if (eq user.role "user")}}selected{{/if}}>User</option>
+        <option value="admin" {{#if (eq user.role "admin")}}selected{{/if}}>Admin</option>
+      </select>
+    </div>
+
+    <div style="margin-bottom: 15px;">
       <label>Password</label><br />
       <input
         type="password"
@@ -43,6 +51,6 @@
       type="submit"
       class="btn btn-primary"
       style="padding: 10px 20px;"
-    >Update Admin Account</button>
+    >Update Account</button>
   </form>
 </div>

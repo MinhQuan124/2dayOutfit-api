@@ -61,7 +61,7 @@ const userController = {
   updateUser: async (req, res) => {
     try {
       const { id } = req.params;
-      const { name, email, password } = req.body;
+      const { name, email, role, password } = req.body;
 
       const user = await User.findById(id);
       if (!user) {
@@ -104,6 +104,7 @@ const userController = {
 
       user.name = name;
       user.email = email;
+      user.role = role;
 
       await user.save();
       res.redirect("/admin/users");

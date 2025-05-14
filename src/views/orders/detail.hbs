@@ -1,0 +1,47 @@
+<div class="mt-3">
+  <a
+    href="/admin/orders"
+    style="font-size: 20px;text-decoration: none;padding: 10px 10px 10px 0"
+  >Back to orders list</a>
+  <h2>Order detail</h2>
+
+  <p>Placed on {{formatDate order.createdAt}}</p>
+  <div
+    style="display: flex; justify-content: space-between; align-items:center"
+  >
+    <div>
+      <p>Customer name: {{order.fullname}}</p>
+      <p>Customer phone number: {{order.phone}}</p>
+      <p>Customer delivery address: {{order.deliveryAddress}}</p>
+    </div>
+
+    <div>
+      <h4>Status: {{order.status}}</h4>
+      <h5>Total: {{order.totalAmount}}$</h5>
+      <p>Payment method: {{order.paymentMethod}}</p>
+      <p>Shipping Date Range: {{order.shippingDateRange}}</p>
+    </div>
+  </div>
+
+  <h3>Products</h3>
+  {{#each order.items}}
+    <div
+      style="display:flex;border: 1px solid #ddd; padding: 10px; margin-bottom: 20px;"
+    >
+      <img
+        src="{{image}}"
+        alt="{{color}}"
+        style="width: 200px; height: auto;"
+      />
+
+      <div style="margin-left: 15px;">
+        <h3>{{productId.name}}</h3>
+        <p>Size: {{size}}</p>
+        <p>Color: {{color}}</p>
+        <p>Quantity: {{quantity}}</p>
+        <p>Price: {{price}}$</p>
+      </div>
+
+    </div>
+  {{/each}}
+</div>
