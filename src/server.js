@@ -14,15 +14,25 @@ const db = require("./config/db");
 
 const app = express();
 
+const whitelist = [
+  "https://2dayoutfit.vercel.app",
+  "http://localhost:3000",
+  "http://127.0.0.1:3000",
+];
+
 app.use(
   cors({
-    origin:
-      process.env.NODE_ENV === "development"
-        ? "http://localhost:3000"
-        : process.env.CLIENT_URL,
+    origin: function (origin, callback) {
+      if (!origin || whitelist.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
+    exposedHeaders: ["Vary"],
   })
-); // cho phép frontend gọi API
+);
 app.use(express.json()); // parse JSON
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
