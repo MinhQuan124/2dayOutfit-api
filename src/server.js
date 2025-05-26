@@ -16,7 +16,10 @@ const app = express();
 
 app.use(
   cors({
-    origin: process.env.CLIENT_URL,
+    origin:
+      process.env.NODE_ENV === "development"
+        ? "http://localhost:3000"
+        : process.env.CLIENT_URL,
     credentials: true,
   })
 ); // cho phép frontend gọi API
