@@ -26,13 +26,14 @@ app.use(
       if (!origin || whitelist.includes(origin)) {
         callback(null, true);
       } else {
-        callback(new Error("Not allowed by CORS"));
+        callback(null, false);
       }
     },
     credentials: true,
     exposedHeaders: ["Vary"],
   })
 );
+
 app.use(express.json()); // parse JSON
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
